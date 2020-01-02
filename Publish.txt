@@ -1,0 +1,5 @@
+cd "PROJECTPATH\TimedWorker"
+dotnet publish -o Release PUBLISHPATH
+sc.exe create TimedWorker binpath= PUBLISHPATH\TimedWorker.exe
+sc.exe start TimedWorker
+sc.exe delete TimedWorker

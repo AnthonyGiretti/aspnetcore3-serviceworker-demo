@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoWorkerService", "DemoWorkerService.csproj", "{07760680-56D1-48D7-A1E9-7D2F5A8642DF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution folder", "Solution folder", "{507A20B5-3A07-4EC9-A341-36C4272B527E}"
+	ProjectSection(SolutionItems) = preProject
+		Publish.txt = Publish.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
