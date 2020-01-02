@@ -20,7 +20,7 @@ namespace DemoWorkerService
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(MyJob, null, TimeSpan.Zero, TimeSpan.FromSeconds(3));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(3));
             return Task.CompletedTask;
         }
 
@@ -34,7 +34,7 @@ namespace DemoWorkerService
 
         }
 
-        private void MyJob(object state)
+        private void DoWork(object state)
         {
             _logger.LogDebug($"Try to execute iteration {_counter + 1} of MyJob ");
             if (Monitor.TryEnter(_lock))
