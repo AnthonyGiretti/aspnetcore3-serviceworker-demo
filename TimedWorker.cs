@@ -37,13 +37,14 @@ namespace DemoWorkerService
 
         private void DoWork(object state)
         {
-            _logger.LogDebug($"Try to execute iteration {_counter + 1} of MyJob ");
+            _logger.LogDebug($"Try to execute next iteration {_counter + 1} of DoWork ");
             if (Monitor.TryEnter(_lock))
             {
                 try
                 {
-                    _logger.LogDebug($"Running MyJob iteration {_counter}");
-                    Thread.Sleep(8000);
+                    _logger.LogDebug($"Running DoWork iteration {_counter}");
+                    Task.Run(() => Thread.Sleep(8000)).Wait();
+                    _logger.LogDebug($"DoWork {_counter} finished, will start iteration {_counter + 1}");
                 }
                 finally
                 {
