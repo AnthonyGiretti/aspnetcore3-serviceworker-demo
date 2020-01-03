@@ -37,7 +37,6 @@ namespace DemoWorkerService
 
         private void DoWork(object state)
         {
-            _logger.LogDebug($"Try to execute next iteration {_counter + 1} of DoWork ");
             if (Monitor.TryEnter(_lock))
             {
                 try
@@ -51,6 +50,10 @@ namespace DemoWorkerService
                     _counter++;
                     Monitor.Exit(_lock);
                 }
+            }
+            else
+            {
+                _logger.LogDebug($"Iteration {_counter } of DoWork is still running");
             }
         }
     }
