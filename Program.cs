@@ -1,3 +1,4 @@
+using DemoWorkerService.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -15,6 +16,7 @@ namespace DemoWorkerService
                 .UseWindowsService()
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddSingleton<IMyService, MyService>();
                     services.AddHostedService<TimedWorker>();
                 });
     }

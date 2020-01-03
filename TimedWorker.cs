@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DemoWorkerService.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -9,13 +10,15 @@ namespace DemoWorkerService
     public class TimedWorker : IHostedService, IDisposable
     {
         private readonly ILogger<TimedWorker> _logger;
+        private readonly IMyService _myService;
         private Timer _timer;
         private static object _lock = new object();
         private int _counter = 0;
 
-        public TimedWorker(ILogger<TimedWorker> logger)
+        public TimedWorker(ILogger<TimedWorker> logger, IMyService myService)
         {
             _logger = logger;
+            _myService = myService;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -42,7 +45,7 @@ namespace DemoWorkerService
                 try
                 {
                     _logger.LogDebug($"Running DoWork iteration {_counter}");
-                    Task.Run(() => Thread.Sleep(8000)).Wait();
+                    _myService.DoWorkAsync().Wait();
                     _logger.LogDebug($"DoWork {_counter} finished, will start iteration {_counter + 1}");
                 }
                 finally
