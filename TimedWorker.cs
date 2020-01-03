@@ -20,28 +20,28 @@ namespace DemoWorkerService
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(async state => await DoWorkAsync(state), null, TimeSpan.Zero, TimeSpan.FromSeconds(3));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(3));
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            _timer?.Change(Timeout.Infinite, 0);
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-
+            _timer?.Dispose();
         }
 
-        private async Task DoWorkAsync(object state)
+        private void DoWork(object state)
         {
             _logger.LogDebug($"Try to execute iteration {_counter + 1} of MyJob ");
             if (Monitor.TryEnter(_lock))
             {
                 try
                 {
-                    await Task.Run(() => { });
                     _logger.LogDebug($"Running MyJob iteration {_counter}");
                     Thread.Sleep(8000);
                 }
